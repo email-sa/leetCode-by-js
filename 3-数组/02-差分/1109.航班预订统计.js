@@ -9,6 +9,13 @@
  * @param {number[][]} bookings
  * @param {number} n
  * @return {number[]}
+ * 题目转义
+ *给你输入一个长度为 n 的数组 nums，其中所有元素都是 0。
+ 再给你输入一个 bookings，里面是若干三元组 (i,j,k)，
+ 每个三元组的含义就是要求你给 nums 数组的闭区间 [i-1,j-1] 中所有元素都加上 k。
+ 请你返回最后的 nums 数组是多少？
+ *
+ *
  * 思路
  * 利用差分法求解
  * 差分法： arr[i]=arr[i]-arr[i-1]   对差分数组求前缀和即可得到原数组
@@ -27,7 +34,7 @@
  */
 
 // 定义一个差分公共类 包含increase 和 result 前缀和方法
-class Diff {
+export class Diff {
     constructor(n) {
         this.diffArr = [];
         this.diff(new Array(n + 1).fill(0), n); // 初始化diff数组全为0，且长度为 n+1
