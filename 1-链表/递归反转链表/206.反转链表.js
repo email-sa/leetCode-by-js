@@ -36,15 +36,16 @@ var reverseList = function (head) {
  * 记录前一个节点，将前后节点交换
  */
 var reverseList = function (head) {
-    if (head === null) return null;
+    if (head === null) return null; // 链表是否为空
     let pre = null;
     let temp = head;
     while (temp !== null) {
+        // 直到链表遍历结束
         // 将当前节点和后一个节点互换位置，直至链表为空
-        const next = temp.next;
-        temp.next = pre;
+        const next = temp.next; // 存储下一个节点
+        temp.next = pre; // 新链表的下一个节点为原来链表的上一个节点
         pre = temp;
-        temp = next;
+        temp = next; // 指针向后移
     }
     return pre;
 };
