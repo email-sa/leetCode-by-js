@@ -5,12 +5,16 @@
  */
 
 // @lc code=start
+/**
+ * 时间复杂度 getRandom 时间复杂度为 O(1)，insert 和 remove 平均时间复杂度为 O(1)，
+ * 在最坏情况下为 O(N) 当元素数量超过当前分配的动态数组和哈希表的容量导致空间重新分配时
+ * 空间复杂度 o(N)
+ */
 
+//
 var RandomizedSet = function () {
     this.nums = []; // 数值数组
-    this.result = []; // 操作状态
-    this.indexValMap = new Map();
-    this.valMap = new Map();
+    this.valMap = new Map(); // 不会重复的数组 值-索引
 };
 
 /**
@@ -19,19 +23,13 @@ var RandomizedSet = function () {
  * 添加元素
  * 更新【值-索引】的map数据
  * 更新结果数组
- * 更新状态数组
  */
 RandomizedSet.prototype.insert = function (val) {
-    if (this.indexValMap.has(val)) {
+    if (this.valMap.has(val)) {
         return false;
-    } else {
-        let index = this.nums.push(val);
-        let indexs = this.valMap.get(val) ?? [];
-        if (indexs) {
-            indexs.push(index - 1);
-        }
-        this.valMap.set(val, indexs);
     }
+    let index = this.nums.push(val);
+    this.valMap.set(val, index - 1);
     return true;
 };
 
@@ -41,14 +39,23 @@ RandomizedSet.prototype.insert = function (val) {
  * 删除元素
  * 更新【值-索引】的map数据
  * 更新结果数组
- * 更新状态数组
+ *
+ * 删除元素，就将元素和最后一个元素交换位置，这样删除时 时间复杂度就是 O(1)
  */
 RandomizedSet.prototype.remove = function (val) {
-    console.log("*--", val);
     if (this.valMap.has(val)) {
-        let index = this.valMap.get(val);
-        this.nums.splice(index[0], 1);
-        this.valMap.set(val, index.slice(1));
+        let len = this.valMap.size - 1;
+        let temp = this.nums[len];
+        let valIndex = this.valMap.get(val);
+        // 更新最后一个元素的索引为val的原索引
+        this.valMap.set(temp, valIndex);
+        // 替换val和最后一个元素
+        this.nums[len] = val;
+        //数组中更新原索引值为最后一个元素的值
+        this.nums[valIndex] = temp;
+        // 删除最后一个元素
+        this.nums.pop();
+        this.valMap.delete(val);
         return true;
     }
     return false;
@@ -58,12 +65,8 @@ RandomizedSet.prototype.remove = function (val) {
  * @return {number}
  */
 RandomizedSet.prototype.getRandom = function () {
-    if (this.nums?.length === 1) {
-        return this.nums[0];
-    } else {
-        let random = Math.floor(Math.random() * 0.5) - 1 - this.nums?.length;
-        return this.nums[random];
-    }
+    let random = parseInt(Math.random() * this.nums?.length);
+    return this.nums[random];
 };
 
 /**
