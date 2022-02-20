@@ -1,27 +1,17 @@
-# my-project
+# leetCode-by-js
 
-> A Vue.js project
+记录在 leetCode 刷题的 js 解法合集
 
-## Build Setup
+# 刷题的小建议
 
-``` bash
-# install dependencies
-npm install
+在 leetCode 上面有很多题型的题，如果按顺序刷题的话，实际上对我们是没有什么帮助的-.-
+所以，还是建议大家和我一样按照数据结构类型刷题，刷完一个类型之后再去刷下一个类型
+这样目的性的刷题效果或更好一点
 
-# serve with hot reload at localhost:8080
-npm run dev
+# 刷题目录
 
-# build for production with minification
-npm run build
+-   链表
+-   二叉树
+    ...
 
-# build for production and view the bundle analyzer report
-npm run build --report
-
-# run unit tests
-npm run unit
-
-# run all tests
-npm test
-```
-
-For a detailed explanation on how things work, check out the [guide](http://vuejs-templates.github.io/webpack/) and [docs for vue-loader](http://vuejs.github.io/vue-loader).
+(持续更新...)
