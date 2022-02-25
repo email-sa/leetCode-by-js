@@ -37,32 +37,34 @@
 // };
 // 解法2
 
-const result = []; // 记录所有路径
 var allPathsSourceTarget = function (graph) {
+    let result = []; // 记录所有路径
     // 维护递归过程中经过的路径
     let onPath = [];
     // // 记录被遍历过的节点 --- 因为无环，所以可以不用记录已遍历过的点
     // // let visited = [];
+    // ---
+    /* 图遍历框架 */
+    const traverse = (graph, s, onPath) => {
+        // 添加节点 s 到路径
+        onPath.push(s);
+        let len = graph.length;
+        if (s == len - 1) {
+            // 到达终点
+            result.push([...onPath]);
+            onPath.pop(); // 溢出终点，继续后面的寻找
+            return;
+        }
+        // 递归每个相邻的节点
+        for (let neighbor of graph[s]) {
+            traverse(graph, neighbor, onPath); //切换开始位置为graph[s]的元素
+        }
+        // 从路径中移除节点 s
+        onPath.pop();
+    };
+    // ---
     // 记录从起点到当前节点的路径
     traverse(graph, 0, onPath); // 从0开始的路径
     return result;
-};
-/* 图遍历框架 */
-const traverse = (graph, s, onPath) => {
-    // 添加节点 s 到路径
-    onPath.push(s);
-    let len = graph.length;
-    if (s == len - 1) {
-        // 到达终点
-        result.push([...onPath]);
-        onPath.pop(); // 溢出终点，继续后面的寻找
-        return;
-    }
-    // 递归每个相邻的节点
-    for (let neighbor of graph[s]) {
-        traverse(graph, neighbor, onPath); //切换开始位置为graph[s]的元素
-    }
-    // 从路径中移除节点 s
-    onPath.pop();
 };
 // @lc code=end
