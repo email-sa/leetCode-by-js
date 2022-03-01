@@ -13,22 +13,24 @@
  */
 // 数字向上拨动一下
 const upNumber = (s, j) => {
-    if ((s[j] = "9")) {
-        s[j] = "0";
+    let str = s.split("");
+    if (str[j] === "9") {
+        str[j] = "0";
     } else {
-        s[j] = +s[j] + 1 + "";
+        str[j] = +str[j] + 1 + "";
     }
-    return s;
+    return str.join("");
 };
 
 // 数字向下拨动一下
 const downNumber = (s, j) => {
-    if ((s[j] = "0")) {
-        s[j] = "9";
+    let str = s.split("");
+    if (str[j] === "0") {
+        str[j] = "9";
     } else {
-        s[j] = +s[j] - 1 + "";
+        str[j] = +str[j] - 1 + "";
     }
-    return s;
+    return str.join("");
 };
 
 //
@@ -40,17 +42,12 @@ var openLock = function (deadends, target) {
     let q = []; // 核心数据结构
     let visited = new Set(); // 避免走回头路
 
-    let dead = new Set(...deadends); // 记录死亡数字
-    for (let v of deadends) {
-        dead.add(v);
-    }
-    if (dead.has("0000")) {
+    if (deadends.includes("0000")) {
         // 临界情况
         return -1;
     }
     q.push("0000"); // 将起点加入队列
     visited.add("0000");
-
     let step = 0; // 记录扩散的步数
 
     while (q.length) {
@@ -60,13 +57,13 @@ var openLock = function (deadends, target) {
             let cur = q.shift();
             /* 划重点：这里判断是否到达终点 */
             // 找到就返回
-            if (dead.has(cur)) {
+            if (deadends.includes(cur)) {
                 continue;
             }
             if (cur === target) {
                 return step;
             }
-            /* 将 cur 的相邻节点加入队列  */
+            /* 将 cur 的相邻节点加入队列   这个数的前后两个为相邻*/
             for (let j = 0; j < 4; j++) {
                 let up = upNumber(cur, j);
                 if (!visited.has(up)) {
@@ -83,6 +80,7 @@ var openLock = function (deadends, target) {
         /* 划重点：更新步数在这里 */
         step++;
     }
+
     return -1; // m没找到
 };
 // @lc code=end
