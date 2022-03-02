@@ -17,10 +17,10 @@
  * 2.3 做选择，将当前选择加入链表
  * 再递归链表和路径列表，撤销选择
  */
-let result = [];
+
 var permute = function (nums) {
     let track = [];
-
+    let result = [];
     // 路径：记录在 track 中
     // 选择列表：nums 中不存在于 track 的那些元素
     // 结束条件：nums 中的元素全都在 track 中出现
